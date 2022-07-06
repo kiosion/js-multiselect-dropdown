@@ -1,6 +1,7 @@
 const MultiSelectDropdown = (params) => {
   let config = {
     search: true,
+    hideX: false,
     placeholder: 'Select...',
     txtSelected: 'Selected',
     txtAll: 'All',
@@ -87,7 +88,7 @@ const MultiSelectDropdown = (params) => {
       }
 
       Array.from(multiSelect.options).map((option) => {
-        let optionElement = newElement('div', { class: option.selected ? 'checked' : '', optEl: option });
+        let optionElement = newElement('div', { class: option.selected ? 'checked' : '', srcElement: option });
         let optionCheckbox = newElement('input', { type: 'checkbox', checked: option.selected });
         optionElement.appendChild(optionCheckbox);
         optionElement.appendChild(newElement('label', { text: option.text }));
@@ -95,21 +96,21 @@ const MultiSelectDropdown = (params) => {
         optionElement.addEventListener('click', () => {
           optionElement.classList.toggle('checked');
           optionElement.querySelector('input').checked = !optionElement.querySelector('input').checked;
-          optionElement.optEl.selected = !optionElement.optEl.selected;
+          optionElement.srcElement.selected = !optionElement.srcElement.selected;
           multiSelect.dispatchEvent(new Event('change'));
         });
         optionCheckbox.addEventListener('click', () => {
           optionCheckbox.checked = !optionCheckbox.checked;
         });
-        option.listItemElement = optionElement;
+        option.optionElement = optionElement;
         dropdownList.appendChild(optionElement);
       });
-      // Set dropdownListWrapper as a prop on the parent so we can easily call it later
       div.dropdownListWrapper = dropdownListWrapper;
 
-      // Refresh hook called on options updated
       div.refresh = () => {
+        // For demo purposes, remove
         let tempSelectedList = document.getElementById('dropdownSelected');
+
         div.querySelectorAll('span.optext, span.placeholder').forEach((placeholder) => div.removeChild(placeholder));
         let selected = Array.from(multiSelect.selectedOptions);
         if (selected.length > (multiSelect.attributes['multiselect-max-items']?.value ?? 5)) {
@@ -119,31 +120,31 @@ const MultiSelectDropdown = (params) => {
               text: selected.length + ' ' + config.txtSelected
             })
           );
-          selected.map((option) => {
-            tempSelectedList
-              .querySelectorAll('span')
-              .forEach((span, index) => index !== 0 && tempSelectedList.removeChild(span));
-            tempSelectedList.appendChild(newElement('span', { text: option.text }));
-          });
-        } else {
+          // For demo purposes, remove
           tempSelectedList
             .querySelectorAll('span')
             .forEach((span, index) => index !== 0 && tempSelectedList.removeChild(span));
+          selected.map((option) => tempSelectedList.appendChild(newElement('span', { text: option.text })));
+        } else {
+          // For demo purposes, remove
+          tempSelectedList
+            .querySelectorAll('span')
+            .forEach((span, index) => index !== 0 && tempSelectedList.removeChild(span));
+
           selected.map((option) => {
             let span = newElement('span', {
               class: 'optext',
               text: option.text,
-              srcOption: option
+              srcElement: option
             });
-            if (multiSelect.attributes['multiselect-hide-x']?.value !== 'true') {
+            if (!config.hideX) {
               span.appendChild(
                 newElement('span', {
                   class: 'optdel',
                   text: '🗙',
                   title: config.txtRemove,
-                  // We need to update the original (hidden) list
                   onclick: (e) => {
-                    span.srcOption.listItemElement.dispatchEvent(new Event('click'));
+                    span.srcElement.optionElement.dispatchEvent(new Event('click'));
                     div.refresh();
                     e.stopPropagation();
                   }
@@ -151,21 +152,21 @@ const MultiSelectDropdown = (params) => {
               );
             }
             div.appendChild(span);
+            // For demo purposes, remove
             tempSelectedList.appendChild(newElement('span', { text: option.text }));
           });
         }
-        if (multiSelect.selectedOptions.length === 0) {
+        if (multiSelect.selectedOptions?.length === 0) {
           div.appendChild(
             newElement('span', {
               class: 'placeholder',
-              text: multiSelect.attributes.placeholder?.value ?? config.placeholder
+              text: multiSelect.attributes?.placeholder?.value ?? config.placeholder
             })
           );
+          // For demo purposes, remove
           tempSelectedList.appendChild(newElement('span', { text: 'n/a' }));
         }
       };
-
-      // Call refresh hook on first load
       div.refresh();
     };
     multiSelect.loadOptions();
