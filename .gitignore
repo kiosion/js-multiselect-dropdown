@@ -1,0 +1,6 @@
+**/node_modules/**
+**/babel.config.js
+**/.prettierrc
+**/.eslintrc.js
+**/package.json
+**/yarn.lock

@@ -1,0 +1,183 @@
+/* Generic styles for demo page */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, div {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  background-color: #fafafa;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+body > .wrapper {
+  flex-direction: column;
+}
+
+.container {
+  width: 50%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 14px;
+}
+
+body > .wrapper > .container {
+  width: 100%;
+  max-width: unset;
+  margin-bottom: 80px;
+}
+
+#dropdownSelected > span:first-of-type {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+/* Multiselect Dropdown Styles */
+
+:root {
+  --color-background: #ffffff;
+  --color-border: #ced4da;
+  --color-background--option: #d6dde6;
+  --color-background--option--hover: #cbd5e0a1;
+  --color-text--normal: #0c0c0c;
+  --color-text--grey: #24262c;
+  --color-text--placeholder: #ced4da;
+}
+
+.multiselect-dropdown{
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 6px 36px 6px 6px;
+  gap: 6px;
+  border-radius: 6px;
+  border: solid 1px var(--color-border);
+  background-color: var(--color-background);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 16px 12px;
+  min-width: 140px;
+  max-width: 360px;
+  cursor: pointer;
+}
+span.optext, span.placeholder{
+  display: inline-block;
+  padding: 1px 0; 
+  border-radius: 4px; 
+}
+span.optext{
+  background-color: var(--color-background--option);
+  padding: 0 12px 2px 6px; 
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+  cursor: default;
+}
+span.optext .optdel {
+  float: right;
+  margin: 0 -6px 1px 6px;
+  font-size: 0.7em;
+  margin-top: 2px;
+  cursor: pointer;
+  color: var(--color-text--grey);
+}
+.multiselect-dropdown span.optext .optdel:hover { color: #c66;}
+.multiselect-dropdown span.placeholder{
+  color: var(--color-border);
+}
+.multiselect-dropdown-list-wrapper{
+  z-index: 100;
+  border-radius: 6px;
+  border: solid 1px var(--color-border);
+  display: none;
+  margin: -1px;
+  position: absolute;
+  top:0;
+  left: 0;
+  right: 0;
+  background: var(--color-background);
+}
+.multiselect-dropdown-search {
+  padding: 10px 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border: none;
+  border-bottom: solid 1px var(--color-border);
+  font-size: inherit;
+}
+.multiselect-dropdown-search::placeholder {
+  color: var(--color-text--placeholder);
+}
+.multiselect-dropdown-search:focus,
+.multiselect-dropdown-search:focus-visible {
+  outline: none;
+}
+.multiselect-dropdown-list{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  max-height: 160px;
+}
+.multiselect-dropdown-list::-webkit-scrollbar {
+  width: 4px;
+}
+.multiselect-dropdown-list::-webkit-scrollbar-thumb {
+  background-color: var(--color-background--option);
+  border-radius: 1000px;
+}
+.multiselect-dropdown-list div,
+.multiselect-dropdown-list div > input,
+.multiselect-dropdown-list div > label {
+  cursor: pointer;
+  border-radius: 6px;
+}
+.multiselect-dropdown-list div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 6px;
+  padding: 6px;
+  margin: 6px 4px;
+  transition: 120ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.multiselect-dropdown-list input {
+  height: 14px;
+  width: 14px;
+  border: solid 1px var(--color-text--grey);
+  margin: 0;
+}
+.multiselect-dropdown-list div:hover {
+  background-color: var(--color-background--option--hover);
+}
+.multiselect-dropdown span.maxselected {
+  width:100%;
+}
+.multiselect-dropdown-all-selector {
+  border-bottom: solid 1px var(--color-border);
+}
